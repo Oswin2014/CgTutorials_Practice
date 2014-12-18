@@ -1,0 +1,32 @@
+>Depth  Stencil: Depth Test; no same, two generalize
+
+---2014/01/23-------------------
+>D3DFVF_XYZW can't compatible with D3DFVF_TEX0-8?
+A:so what? through my test,there can compatible mutual.
+--------------------------------
+
+---2014/01/25-------------------
+1.Windows DX Graphics: Flow Control(mov r1.w, c2.x).
+Question:
+1.DX front surface is clockwise or counterclockwise?
+-D3DCULL_CW 
+Cull back faces with clockwise vertices(i.e.clockwise vertices is back face).
+
+-D3DCULL_CCW 
+Cull back faces with counterclockwise vertices.
+-SetRenderState(D3DRS_CULLMODE,X) X default is D3DCULL_CCW.
+-so like the OpenGL rigth hand coordinate opposite with D3D left hand coordinate;
+the default front face OpenGL is countclockwise opposite with 
+D3D default front face is clockwise.
+
+2.what's do the program DX SetTexture to uniform fragment shader sampler2D?
+-<C++>
+D3DXCreateTextureFromFile( mD3DDevice, L"..\\..\\Media\\she says.jpg", &mTextureShesays );
+mD3DDevice->SetTexture( 1, mTextureShesays );
+mD3DDevice->SetFVF(D3DFVF_XYZW_DIFFUSE_TEX1);
+-<pixelShader>
+uniform sampler2D decal : register(s1)
+--------------------------------
+
+---2014/01/11-------------------
+--------------------------------

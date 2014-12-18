@@ -1,0 +1,68 @@
+
+>>>object render only when Z = 0 in vertex_shader
+the Depth-Test problem;
+normal Depth render frame in PIX is black & grey,but MyDxApp is white.
+//so set z = 0 can render object, overrode the Depth-Test.
+Solution:
+call "mD3DDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DXCOLOR( 0.0f, 0.25f, 0.25f, 0.55f ), 1.0f, 0 );" Clearing Depth Buffers
+
+>>>coordinate:
+left hand.
+
+>>>homogeneous to normal(why etViewer not do it but render object?)
+if w not equal 1, pipeline will auto divide homogeneous;
+also your can do "float4(aposition.xyz / aposition.w, 1);" yourself.
+
+>>>Why right hand projection matrix let coordinate rotate z 180 angle?
+LH:
+w
+	h
+		Q	1
+		-QZn	
+RH:(in DX the m43 is -QZn,i.e.[Zn*Zf/(Zn-Zf)])
+w	
+	h
+		-Q	-1
+		QZn
+Q = Zf/(Zf - Zn)
+
+point: A(1,1,1,1)
+A x LH = (w, h, Q(1 - Zn), 1)
+A x RH = (w, h, Q(Zn - 1), -1) normalize:(-w, -h, Q(1 - Zn), 1)
+(a point through this transform let x and y negative, that is rotate z axis effect.)
+
+>>>right hand projection matrix to left hand projection matrix
+RH(Normal):
+w
+	h
+		Zf/(Zn-Zf)		-1
+		-Zn*Zf/(Zn-Zf)	0
+
+RH(DX):
+w
+	h
+		Zf/(Zn-Zf)		-1
+		Zn*Zf/(Zn-Zf)	0
+
+LH(DX):
+w
+	h
+		Zf/(Zf-Zn)		1
+		Zn*Zf/(Zn-Zf)	0
+
+RH(Normal) is right hand coordinate system, the frustum direction is -z;
+RH(DX) is right hand coordinate system, the frustum direction is z;
+LH(DX) is left hand coordinate system, the frustum direction is z.    
+		
+RH(Normal) -> RH(DX): negative Zn and  Zf(-Zn and -Zf replace Zn and Zf).
+RH(DX) -> LH(DX): negative Z correspond to RH;
+Zp = s*(-z) + t; 
+h = Zprp - (-z). 
+extract '-', s(RH) transform to -s(LH), -1(RH) to 1(LH).
+
+Solve Experience:
+if think out no possible solution, then 
+write the process down, analysis each step,
+verify it one by one, and point the most possible wrong step  analysis,
+if not have enough knowledge analysis, 
+the bad measure is compare with correct application.

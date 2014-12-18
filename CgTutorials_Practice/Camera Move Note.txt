@@ -1,0 +1,26 @@
+
+Camera Move implement process:
+
+>>(4h)analysis etViewer camera move;
+>>(1.5day)review graphic pipeline;
+>>implement math component(include matrix4x4, vector3)
+>>understand Left Multiply and right Multiply;
+>>understand Vector Rotate sequence  Z -> X -> Y axis, 
+and understand why use mRotX and mRotY;
+
+//just for camera control rotate style
+//let z overlap, so z rotate not effective, 
+//after rotate x first, because y axis is always updir, so rotate x not influence y rotate,
+//but if you rotate y first, then rotate world x axis is not like rotate self x axis.
+inline void OwnMatrix4x4::setPureRotateZXY(f32 radianX, f32 radianY, f32 radianZ)
+{
+	setPureRotateZ(radianZ);
+	rotateX(radianX);
+	rotateY(radianY);
+}
+
+>>defect:
+-when implement a component, not know the aim clear, need true and clear plan;
+-when implement a component, not over it directly, need time control;
+
+Aim, Step, Condition, Time.

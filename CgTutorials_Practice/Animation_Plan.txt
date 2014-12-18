@@ -1,0 +1,10 @@
+
+Animation Plan:
+>>A Pulsating Object:
+a easy robot, a pulsat animation.
+>>Particle Systems:
+like NeHe particle system effect -> relative music make a wave.
+>>Key-Frame Interpolation:
+robot frame animation.
+>>Vertex Skinning:
+robot bone animation.

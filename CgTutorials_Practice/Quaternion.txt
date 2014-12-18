@@ -1,0 +1,47 @@
+
+旋转矩阵 RotX(绕x轴旋转), RotY(绕y轴旋转).
+viewTrans: world space vertex transform to view space;
+列向量方式:
+RotY * RotX * T * [x]
+				  [y]
+				  [z]
+				  [1]
+T 是平移矩阵.
+mul(modelViewProj, Input.position);
+Input.position is float4 type; modelViewProj is a 4x4 matrix.
+行向量方式:
+[x,y,z,w] * T * RotX.transpose * RotY.transpose
+= [x,y,z,w] * T * RotY * RotX;
+mul(Input.position, modelViewProj);
+
+
+Quaternion:
+Matrix RotX, RotY;	//column vector matrix.
+RotY * RotX = RotX.transpose * RotY.transpose;
+user for row vector matrix.
+
+Quaternion qX, qY;
+RotX * RotY = qX * qY.
+
+mQuaternion = qY * qX * mQuaternion(last value); 
+//mQuaternion is last value.
+the quaternion save a row vector transform matrix.
+example:
+[x, y, z, w] * viewTrans;
+viewTrans = RotX.transpose * RotY.transpose
+= RotY * RotX
+= qY * qX.
+
+rotMtx[0][0] = axisX.m_x;
+rotMtx[1][0] = axisX.m_y;
+rotMtx[2][0] = axisX.m_z;
+
+rotMtx[0][1] = axisY.m_x;
+rotMtx[1][1] = axisY.m_y;
+rotMtx[2][1] = axisY.m_z;
+
+rotMtx[0][2] = axisZ.m_x;
+rotMtx[1][2] = axisZ.m_y;
+rotMtx[2][2] = axisZ.m_z;
+
+use axis x,y,z to initialize a row vector rotate matrix.

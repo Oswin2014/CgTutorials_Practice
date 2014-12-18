@@ -1,0 +1,71 @@
+
+>>what's Tesssellation?
+
+use to manage dataset for polygon present object in scene 
+and divide them into suitable structure for rendering;
+
+realtime, detail to dynamically add and sbutract from a mesh;
+
+lead realtime techniques such as "parallax mapping" and "bump mapping";
+
+along with shaders such as a Phong shader;
+
+use for implement subdivision surfaces, level of detail scaling 
+and fine displacement mapping;
+
+tessellation implemented by hardware can generate an incredible 
+amount of visual detail without add the detail to the model size
+and paralyzing refresh rate.
+
+in DX, the graphics primitive is the patch.
+
+fTessLevel:
+number of vertices introduce between existing vertices, 0 < fTessLevel <= 32.
+N-Patch
+Rectangle-Patch
+Triangle-Patch
+
+unlike other stage of the pipeline, these don't operate with triangles as primitive,
+but use patches. the Hull shader take the control points for a patch as input
+and determine certain parameter of the Tessellator, the Tessellator is a fixed-function unit,
+so the programmer does not control how tessellation is calculated. the unit sends 
+the points generate to the Domain Shader, which can apply operation to them.
+
+>>Bezier curve
+
+parametric curve used in computer graphics to model smooth curves.
+not only used in rasterized images, but also in animation as a tool to control motion
+used to control the velocity over time of the move in question
+
+quadratic and cubic bezier curves are most common, Higher degree surves are expensive to evaluate.
+
+when more complex shapes are needed, low order bezier curves are patched together, 
+producing a bezier spline.
+To guarantee smoothness, the control point at which two curves meet must be on the line 
+between the two control points on either side.
+
+simplest method for rasterize a bezier curve is to evaluate it at many closely space point
+and scan convert the approximating sequence of line segment.
+when points space too far apart, a common adaptive methos is recursive subdivision,
+a curve's control points are checked if curve approximates a line segment to within a small tolerance.
+if not, the curve is subdivided parametrically into two segments,  0 ≤ t ≤ 0.5 and 0.5 ≤ t ≤ 1,
+and the same procedure is apply recursively to each half.
+
+
+Number of control points 	Type 
+10 		Cubic Bézier triangular patch 
+15 		Quartic Bézier triangular patch 
+16 		Cubic Bézier quad rectangle patch 
+
+
+
+>>how to implement Tessellation in d3d9?
+
+sample by cubic bezier:
+16 control point generate a curve surface,
+
+>>Apply:
+-draw the ligthObj;
+-adpat to my frame render the lightObj, test the tessellate;
+-let camera move control.
+-light shader start;

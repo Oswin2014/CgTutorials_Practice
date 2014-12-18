@@ -1,0 +1,28 @@
+
+
+>>all vertex in DX is set in left hand coordinate.
+
+>>in DX, set the coordinate left hand or right hand, just change the projection transform to left hand type(LH(DX)) or right hand type(RH(DX)).
+
+	m11 = w; m12 = 0; m13 = 0; m14 = 0;
+	m21 = 0; m22 = h; m23 = 0; m24 = 0;
+
+//	m31 = 0; m32 = 0; m33 = zFar / (zNear - zFar); m34 = -1;	//RH(Normal)
+//	m41 = 0; m42 = 0; m43 = -zNear*m33; m44 = 0;
+
+//	m41 = 0; m42 = 0; m43 = zNear*m33; m44 = 0;	//RH(DX)
+
+
+	m31 = 0; m32 = 0; m33 = zFar / (zFar - zNear); m34 = 1;		//LH(DX)
+	m41 = 0; m42 = 0; m43 = -zNear*m33; m44 = 0;
+	
+>>DX in left hand coordinate, all use rotate, translate matrix is right hand coordinate type, 
+use this matrix, it just see the z axis value in right hand coordinate, 
+transform over, you will set the change value set to left hand, check the value change whether you want to get.
+example: 
+Why negative the rotate radian value?
+Because: use right hand coordinate rotate matrix. like lookdir(0,0,1)
+when rotate X axis, in right hand coordinate, the positive radian will let lookdir y axis value down, 
+but I want the positive radian let lookdir up, so I negative it.
+when rotate Y axis, in right hand coordinate, the positive radian will let lookdir x value add, 
+but the lookdir x axis value add, means that the lookdir rotate to right, so I negative it.

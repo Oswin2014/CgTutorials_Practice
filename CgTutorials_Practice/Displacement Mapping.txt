@@ -1,0 +1,8 @@
+
+similar to texture maps but accessed by the vertex engine.
+
+set by SetTexture.
+
+Displacement mapping support only with N-patches.
+
+>>Texture filtering and sampling operations follow the same rules as the pixel pipeline.
