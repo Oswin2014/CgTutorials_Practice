@@ -10,8 +10,8 @@ T 是平移矩阵.
 mul(modelViewProj, Input.position);
 Input.position is float4 type; modelViewProj is a 4x4 matrix.
 行向量方式:
-[x,y,z,w] * T * RotX.transpose * RotY.transpose
-= [x,y,z,w] * T * RotY * RotX;
+[x,y,z,w] * T.transpose * RotX.transpose * RotY.transpose
+= [x,y,z,w] * T.transpose * RotY * RotX;
 mul(Input.position, modelViewProj);
 
 
