@@ -70,7 +70,7 @@ HRESULT CWinMain::createWnd( HINSTANCE hInstance, int nCmdShow )
 
 	// Create window
 	mHInst = hInstance; 
-	RECT rc = { 0, 0, 640, 480 };
+	RECT rc = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 	AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
 	mHWnd = CreateWindow( L"MyDXApp", L"MyDXApp", WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, hInstance,

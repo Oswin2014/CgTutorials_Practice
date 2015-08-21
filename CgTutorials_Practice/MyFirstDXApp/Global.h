@@ -84,8 +84,15 @@ struct Material
 
 struct Light
 {
-	D3DXVECTOR4 position;
-	D3DXVECTOR4 color;
+	D3DXVECTOR3 position;
+	D3DXVECTOR3 color;
+};
+
+enum LightType
+{
+	Null,
+	Vertex,
+	Pixel,
 };
 
 struct LightExtra
@@ -99,6 +106,7 @@ struct LightExtra
 	f32			cosInnerCone;
 	f32			cosOuterCone;
 };
+
 
 #define D3DFVF_XYZ_DIFFUSE (D3DFVF_XYZ|D3DFVF_DIFFUSE)
 
@@ -118,8 +126,8 @@ struct LightExtra
 //#define VERTEX(x, y, z, w) D3DXVECTOR4(x, y, z, w)
 #define VERTEX(mX, mY, mZ, mW) D3DXVECTOR3(mX, mY, mZ)
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 #define SAFE_DELETE(p) { if(p) { delete p; p = NULL; } }
 #define SAFE_DELETE_ARRAY(p) { if(p) { delete[] p; p = NULL; } }

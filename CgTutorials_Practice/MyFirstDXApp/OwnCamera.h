@@ -12,7 +12,7 @@ class OwnCamera
 public:
 	OwnCamera()
 		: mFov(0.85f)
-		, mAspect(640.f / 480.f)
+		, mAspect((float)SCREEN_WIDTH / (float)SCREEN_HEIGHT)
 		, mZNear(0.2f)
 		, mZFar(4000)
 		, mCameraPos(OwnVector3::ZERO)

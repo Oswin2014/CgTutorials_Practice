@@ -5,27 +5,15 @@
 #include <d3dx9.h>
 #include "TessellateSample.h"
 #include "OwnMath.h"
+#include "ModelObject.h"
 
-class OwnCameraNormal;
+//class OwnCameraNormal;
 class OwnVector3;
 //class OwnMatrix4x4;
-
-struct LightObject
-{
-	LPD3DXMESH mesh;
-	OwnMatrix4x4 modelMtx;
-};
 
 class CLight : public CTessellateSample
 {
 public:
-
-	enum LightType
-	{
-		Null,
-		Vertex,
-		Pixel,
-	};
 
 	CLight(void);
 	~CLight(void);
@@ -74,7 +62,7 @@ private:
 
 	LightType mLightType;
 
-	LightObject mLightObject[16];
+	MeshObject mLightObject[16];
 };
 
 #endif

@@ -187,11 +187,11 @@ void CAnimation::twoLightShaderConfig()
 	material.shininess = 5;
 
 	Light lights[2];
-	lights[0].position = D3DXVECTOR4(-10,0,-10, 0);
-	lights[0].color = D3DXVECTOR4(1,0,0, 0);
+	lights[0].position = D3DXVECTOR3(-10, 0, -10);
+	lights[0].color = D3DXVECTOR3(1, 0, 0);
 
-	lights[1].position = D3DXVECTOR4(10,0,-10, 0);
-	lights[1].color = D3DXVECTOR4(0,1,0, 0);
+	lights[1].position = D3DXVECTOR3(10, 0, -10);
+	lights[1].color = D3DXVECTOR3(0, 1, 0);
 
 	LPD3DXCONSTANTTABLE constable = mVtxConstTable;
 
@@ -204,7 +204,7 @@ void CAnimation::twoLightShaderConfig()
 
 }
 //-----------------------------------------------------------------------
-void CAnimation::shaderApply( OwnMatrix4x4 *pModelMtx /*= NULL*/ )
+void CAnimation::shaderApply(OwnMatrix4x4 *pModelMtx /*= NULL*/)
 {
 	if(NULL != mVtxConstTable)
 	{

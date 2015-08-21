@@ -11,6 +11,7 @@
 #include "TessellateSample.h"
 #include "Light.h"
 #include "Animation.h"
+#include "EnvironmentMap.h"
 
 //--------------------------------------------------------------------------------------
 CIntegrateModule::CIntegrateModule(LPDIRECT3DDEVICE9 pdevice)
@@ -33,7 +34,9 @@ CIntegrateModule::CIntegrateModule(LPDIRECT3DDEVICE9 pdevice)
 
 	//mChapterBase = new CLight(pdevice);
 
-	mChapterBase = new CAnimation(pdevice);
+	//mChapterBase = new CAnimation(pdevice);
+
+	mChapterBase = new CEnvironmentMap(pdevice);
 
 	mCamera = mChapterBase->getCamera();
 }

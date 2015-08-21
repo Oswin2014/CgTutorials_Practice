@@ -66,6 +66,12 @@
     <ClInclude Include="OwnLog.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="EnvironmentMap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -111,6 +117,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OwnLog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="EnvironmentMap.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelObject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -39,6 +39,11 @@ public:
 
 	void update();
 
+public:
+
+	D3DPRESENT_PARAMETERS mD3Dpp;
+
+
 private:
 	CDXFrame(void);
 
@@ -48,7 +53,6 @@ private:
 
 	LPDIRECT3DDEVICE9 mD3DDevice;
 
-	D3DPRESENT_PARAMETERS mD3Dpp; 
 
 	CIntegrateModule* mSampleModule;
 

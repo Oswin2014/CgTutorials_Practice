@@ -12,6 +12,7 @@ struct XYZW_Color_Tex
 	float4 position : POSITION;
 	float4 color	: COLOR0;
 	float2 texCoord : TEXCOORD0;
+	float2 R		: TEXCOORD1;
 };
 //--------------------------------------------------
 struct Light
@@ -38,7 +39,7 @@ float3 u_EyePosition;
 
 Material u_Material;
 
-Light u_Lights[2] : register(c0);
+Light u_Light : register(c0);
 
 //--------------------------------------------------
 
@@ -47,15 +48,15 @@ Light u_Lights[2] : register(c0);
 /*------ Functions --------------------------------------------------------*/
 
 void C5E5_computeLighting(Light light,
-float3 P,
-float3 N,
-float  shininess,
-out float3 diffuseResult,
-out float3 specularResult)
+	float3 P,
+	float3 N,
+	float  shininess,
+	out float3 diffuseResult,
+	out float3 specularResult)
 {
 	//Compute the diffuse lighting
 	float3 L = normalize(light.position - P);
-	float diffuseLight = max(dot(N,L), 0);
+	float diffuseLight = max(dot(N, L), 0);
 
 	//diffuse term
 	diffuseResult = light.color * diffuseLight;
@@ -65,62 +66,42 @@ out float3 specularResult)
 	float3 H = normalize(L + V);
 
 	// specular term
-	float specularLight = pow( max(dot(N,H), 0), shininess);
-	if(diffuseLight <= 0) specularLight = 0;
+	float specularLight = pow(max(dot(N, H), 0), shininess);
+	if (diffuseLight <= 0) specularLight = 0;
 	specularResult = light.color * specularLight;
 
 }
 //--------------------------------------------------
-void C6E1_pulsate(XYZW_Normal_Tex input,
-uniform float time,
-uniform float frequency,
-uniform float scaleFactor,
+void C7E1v_reflection(XYZW_Normal_Tex input,
 out XYZW_Color_Tex output)
 {
-	frequency = 1.5;
-	scaleFactor = 2;
-
-// 	float displacement = scaleFactor * 0.5 * sin(input.position.y * frequency * time) + 1;
-// 	float4 displacementDirection = float4(input.normal.x, input.normal.y, input.normal.z, 0);
-
-	float displacement = scaleFactor * 0.5 * sin(frequency * time) + 1;
-	float4 displacementDirection = float4(0, 0, input.normal.z, 0);
-	float4 newPosition = input.position + displacement * displacementDirection;
-
-	output.position = mul(newPosition, u_ModelViewProjMatrix);
+	output.position = mul(input.position, u_ModelViewProjMatrix);
 	
-	float3 emissive = float3(0,0,0);
-	float3 ambient = float3(0,0,0);
-	float3 diffuse = float3(0,0,0);
-	float3 specular = float3(0,0,0);
+	float3 emissive = 0;
+	float3 ambient = 0;
+	float3 diffuse = 0;
+	float3 specular = 0;
 
 	//emissive term
 	emissive = u_Material.Ke;
-	
+
 	//ambient term
 	ambient = u_Material.Ka * u_GlobalAmbient;
-	
-	//Loop over diffuse and specular contributions for each light
-	float3 diffuseLight;
-	float3 specularLight;
-	float3 diffuseSum = 0;
-	float3 specularSum = 0;
 
-	for(int i = 0; i < 2; i++)
-	{
-		C5E5_computeLighting(u_Lights[i], newPosition.xyz, input.normal, 
-			u_Material.shininess, diffuseLight, specularLight);
+	float3 diffuseLight = 0;
+	float3 specularLight = 0;
 
-		diffuseSum += diffuseLight;
-		specularSum += specularLight;
-	}
+	C5E5_computeLighting(u_Light, input.position.xyz, input.normal,
+		u_Material.shininess, diffuseLight, specularLight);
 
-	diffuse = u_Material.Kd * diffuseSum;
-	specular = u_Material.Ks * specularSum;
-	
+	diffuse = u_Material.Kd * diffuseLight;
+	specular = u_Material.Ks * specularLight;
+
 	output.color.xyz = emissive + ambient + diffuse + specular;
+	//output.color.xyz = input.normal;
 	output.color.w = 1;
 
 	output.texCoord = input.texCoord;
+	output.R = output.texCoord;
 }
 //--------------------------------------------------

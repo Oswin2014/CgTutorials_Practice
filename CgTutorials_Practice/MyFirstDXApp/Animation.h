@@ -45,7 +45,7 @@ protected:
 
 	void twoLightShaderConfig();
 
-private:
+protected:
 
 	LPD3DXCONSTANTTABLE mVtxConstTable;
 

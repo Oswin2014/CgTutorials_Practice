@@ -20,7 +20,7 @@ CLight::CLight( LPDIRECT3DDEVICE9 pdevice )
 	, mVtxConstTable(NULL)
 {
 	mShaderUse = true;
-	mLightType = CLight::Pixel;
+	mLightType = LightType::Pixel;
 
 	//mCamera = new OwnCameraNormal();
 	mCamera = new OwnCameraQuaternion();
@@ -151,7 +151,7 @@ void CLight::shaderApply(OwnMatrix4x4 *pModelMtx)
 
 		Shader_SetVector(mD3DDevice,constable, "u_EyePosition", EyePosition);
 
-		//TODO: model matrix not just translate, rotate also need opposite
+		//TODO: world space to model space matrix not just translate, rotate also need opposite
 		modelMtx.m41 = - modelMtx.m41;
 		modelMtx.m42 = - modelMtx.m42;
 		modelMtx.m43 = - modelMtx.m43;
@@ -300,11 +300,11 @@ void CLight::twoLightShaderConfig()
 	material.shininess = 5;
 
 	Light lights[2];
-	lights[0].position = D3DXVECTOR4(-10,0,-10, 0);
-	lights[0].color = D3DXVECTOR4(1,0,0, 0);
+	lights[0].position = D3DXVECTOR3(-10, 0, -10);
+	lights[0].color = D3DXVECTOR3(1, 0, 0);
 
-	lights[1].position = D3DXVECTOR4(10,0,-10, 0);
-	lights[1].color = D3DXVECTOR4(0,1,0, 0);
+	lights[1].position = D3DXVECTOR3(10, 0, -10);
+	lights[1].color = D3DXVECTOR3(0, 1, 0);
 
 	LPD3DXCONSTANTTABLE constable;
 	if(LightType::Vertex == mLightType)
