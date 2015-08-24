@@ -18,6 +18,8 @@ public:
 
 	CEnvironmentMap(LPDIRECT3DDEVICE9 pdevice);
 
+	void draw();
+
 	void draw(bool bRenderEnvMappedMesh);
 
 	void deviceRestore();
@@ -38,15 +40,19 @@ public:
 
 protected:
 
+	HRESULT createVertexBuff();
+
 	DWORD getFVF();
 
 	void initMesh(LPD3DXPATCHMESH pMesh, FLOAT fTessLevel);
 
 	void lightShaderConfig();
 
-	void modelShaderApply(OwnMatrix4x4 *pModelMtx = NULL);
+	void modelShaderApply(OwnMatrix4x4 *pModelMtx = NULL, bool bRenderEnvMappedMesh = false);
 
 	void renderSceneIntoCubeMap(IDirect3DDevice9* pdevice);
+
+	void renderPrevious();
 
 	void shaderApply();
 
@@ -57,6 +63,8 @@ private:
 	static const int s_ObjCount = 9;
 
 	MeshObject mEnvironmentObj[s_ObjCount];
+
+	LPDIRECT3DVERTEXBUFFER9 mVBQuad;
 
 	IDirect3DCubeTexture9* mCubeMap;
 

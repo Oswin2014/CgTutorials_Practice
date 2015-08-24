@@ -126,8 +126,8 @@ struct LightExtra
 //#define VERTEX(x, y, z, w) D3DXVECTOR4(x, y, z, w)
 #define VERTEX(mX, mY, mZ, mW) D3DXVECTOR3(mX, mY, mZ)
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 768
 
 #define SAFE_DELETE(p) { if(p) { delete p; p = NULL; } }
 #define SAFE_DELETE_ARRAY(p) { if(p) { delete[] p; p = NULL; } }

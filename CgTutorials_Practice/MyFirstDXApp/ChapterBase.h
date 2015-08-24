@@ -33,6 +33,8 @@ public:
 
 	virtual void releaseForDeviceReset() = 0;
 
+	virtual void renderPrevious() {};
+
 	virtual void shaderConfig(LPD3DXCONSTANTTABLE pVtxConstTable = NULL, LPD3DXCONSTANTTABLE pPxlConstTable = NULL) {}
 
 	virtual bool shaderUse(){ return mShaderUse; }

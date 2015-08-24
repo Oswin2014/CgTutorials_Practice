@@ -12,7 +12,7 @@ struct XYZW_Color_Tex
 	float4 position : POSITION;
 	float4 color	: COLOR0;
 	float2 texCoord : TEXCOORD0;
-	float2 R		: TEXCOORD1;
+	float3 R		: TEXCOORD1;
 };
 //--------------------------------------------------
 struct Light
@@ -33,6 +33,8 @@ struct Material
 
 float4x4 u_ModelViewProjMatrix;
 
+float4x4 u_ModelToWorld;
+
 float3 u_GlobalAmbient;
 
 float3 u_EyePosition;
@@ -50,6 +52,7 @@ Light u_Light : register(c0);
 void C5E5_computeLighting(Light light,
 	float3 P,
 	float3 N,
+	float3 eyePosition,
 	float  shininess,
 	out float3 diffuseResult,
 	out float3 specularResult)
@@ -62,7 +65,7 @@ void C5E5_computeLighting(Light light,
 	diffuseResult = light.color * diffuseLight;
 
 	//Compute the specular lighting
-	float3 V = normalize(u_EyePosition - P);
+	float3 V = normalize(eyePosition - P);
 	float3 H = normalize(L + V);
 
 	// specular term
@@ -75,12 +78,16 @@ void C5E5_computeLighting(Light light,
 void C7E1v_reflection(XYZW_Normal_Tex input,
 out XYZW_Color_Tex output)
 {
-	output.position = mul(input.position, u_ModelViewProjMatrix);
-	
 	float3 emissive = 0;
 	float3 ambient = 0;
 	float3 diffuse = 0;
 	float3 specular = 0;
+
+	output.position = mul(input.position, u_ModelViewProjMatrix);
+	
+	float3 P = mul(input.position, u_ModelToWorld).xyz;
+	float3 N = mul(input.normal, (float3x3)u_ModelToWorld);
+	N = normalize(N);
 
 	//emissive term
 	emissive = u_Material.Ke;
@@ -91,7 +98,7 @@ out XYZW_Color_Tex output)
 	float3 diffuseLight = 0;
 	float3 specularLight = 0;
 
-	C5E5_computeLighting(u_Light, input.position.xyz, input.normal,
+	C5E5_computeLighting(u_Light, P, N, u_EyePosition,
 		u_Material.shininess, diffuseLight, specularLight);
 
 	diffuse = u_Material.Kd * diffuseLight;
@@ -100,8 +107,11 @@ out XYZW_Color_Tex output)
 	output.color.xyz = emissive + ambient + diffuse + specular;
 	//output.color.xyz = input.normal;
 	output.color.w = 1;
+	//output.color = 0;
 
 	output.texCoord = input.texCoord;
-	output.R = output.texCoord;
+
+	float3 I = P - u_EyePosition;
+	output.R = reflect(I, N);
 }
 //--------------------------------------------------

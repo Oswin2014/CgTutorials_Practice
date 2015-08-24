@@ -366,6 +366,13 @@ void CIntegrateModule::releaseForDeviceReset()
 {
 	mChapterBase->releaseForDeviceReset();
 }
+
+//-----------------------------------------------------------------------
+void CIntegrateModule::renderPrevious()
+{
+	mChapterBase->renderPrevious();
+}
+
 //-----------------------------------------------------------------------
 void CIntegrateModule::deviceRestore()
 {

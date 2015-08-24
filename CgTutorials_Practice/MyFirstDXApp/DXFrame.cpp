@@ -69,6 +69,8 @@ HRESULT CDXFrame::initDevice()
 //--------------------------------------------------------------------------------------
 void CDXFrame::render()
 {
+	mSampleModule->renderPrevious();
+
 	mD3DDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DXCOLOR( 0.0f, 0.25f, 0.25f, 0.55f ), 1.0f, 0 );
 
 	// Begin the scene

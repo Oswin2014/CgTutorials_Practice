@@ -33,6 +33,8 @@ public:
 
 	void releaseForDeviceReset();
 
+	void renderPrevious();
+
 private:
 	LPDIRECT3DDEVICE9 mD3DDevice;
 
